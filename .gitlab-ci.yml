@@ -1,0 +1,13 @@
+image: java:8-jdk
+
+stages:
+  - build
+
+build_job_1:
+  stage: build
+  script:
+    - chmod +x gradlew
+    - ./gradlew shadow
+  artifacts:
+    paths:
+      - build/libs/*.jar
