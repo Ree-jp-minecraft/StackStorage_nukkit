@@ -1,4 +1,6 @@
-# StackStorage_nukkit[![pipeline status](https://gitlab.com/Ree-jp/StackStorage_nukkit/badges/dev/pipeline.svg)](https://gitlab.com/Ree-jp/StackStorage_nukkit/-/commits/dev)
+# StackStorage_nukkit
+[![pipeline status](https://gitlab.com/Ree-jp/StackStorage_nukkit/badges/dev/pipeline.svg)](https://gitlab.com/Ree-jp/StackStorage_nukkit/-/commits/dev)  
+
 Add simple virtual storage
 
 # How to use
