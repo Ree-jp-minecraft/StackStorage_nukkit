@@ -45,6 +45,8 @@ nukkit {
     website = "https://github.com/Ree-jp-minecraft/StackStorage_nukkit"
     version = "1.0.0"
 
+    permissions.register("stackstorage.*")
+
     permissions {
         "stackstorage.*" {
             description = "StackStorage permission"
