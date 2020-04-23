@@ -74,16 +74,6 @@ nukkit {
                         }
                     }
                 }
-                "stackstorage.page.*" {
-                    description = "StackStorage page permission"
-                    default = net.minecrell.pluginyml.nukkit.NukkitPluginDescription.Permission.Default.TRUE
-                    children {
-                        "stackstorage.page.0" {
-                            description = "StackStorage page 0 permission"
-                            default = net.minecrell.pluginyml.nukkit.NukkitPluginDescription.Permission.Default.FALSE
-                        }
-                    }
-                }
                 "stackstorage.admin.*" {
                     description = "StackStorage admin permission"
                     default = net.minecrell.pluginyml.nukkit.NukkitPluginDescription.Permission.Default.OP
