@@ -9,19 +9,10 @@
  * Copyright (c) 2020. Ree-jp.  All Rights Reserved.
  */
 
-package net.ree_jp.storage.sqlite
+package net.ree_jp.storage.inventory
 
-import cn.nukkit.item.Item
+import cn.nukkit.blockentity.BlockEntityChest
+import cn.nukkit.inventory.DoubleChestInventory
 
-interface ISqliteHelper {
-
-    fun isExists(xuid: String): Boolean
-
-    fun getItem(xuid: String, item: Item): Item
-
-    fun setItem(xuid: String, item: Item)
-
-    fun getStorage(xuid: String): List<Item>
-
-    fun setStorage(xuid: String, storage: List<Item>)
+open class VirtualDoubleInventory(left: BlockEntityChest, right: BlockEntityChest) : DoubleChestInventory(left, right) {
 }
