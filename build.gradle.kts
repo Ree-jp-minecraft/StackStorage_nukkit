@@ -44,4 +44,49 @@ nukkit {
     description = "VerticalStoragePlugin"
     website = "https://github.com/Ree-jp-minecraft/StackStorage_nukkit"
     version = "1.0.0"
+
+    permissions {
+        "stackstorage.*" {
+            description = "StackStorage permission"
+            default = net.minecrell.pluginyml.nukkit.NukkitPluginDescription.Permission.Default.FALSE
+            children {
+                "stackstorage.command.*" {
+                    description = "StackStorage command permission"
+                    default = net.minecrell.pluginyml.nukkit.NukkitPluginDescription.Permission.Default.TRUE
+                }
+                "stackstorage.action.*" {
+                    description = "StackStorage action permission"
+                    default = net.minecrell.pluginyml.nukkit.NukkitPluginDescription.Permission.Default.TRUE
+                    children {
+                        "stackstorage.action.open" {
+                            description = "StackStorage action open permission"
+                            default = net.minecrell.pluginyml.nukkit.NukkitPluginDescription.Permission.Default.TRUE
+                        }
+                        "stackstorage.action.in" {
+                            description = "StackStorage action in permission"
+                            default = net.minecrell.pluginyml.nukkit.NukkitPluginDescription.Permission.Default.TRUE
+                        }
+                        "stackstorage.action.out" {
+                            description = "StackStorage action out permission"
+                            default = net.minecrell.pluginyml.nukkit.NukkitPluginDescription.Permission.Default.TRUE
+                        }
+                    }
+                }
+                "stackstorage.page.*" {
+                    description = "StackStorage page permission"
+                    default = net.minecrell.pluginyml.nukkit.NukkitPluginDescription.Permission.Default.TRUE
+                    children {
+                        "stackstorage.page.0" {
+                            description = "StackStorage page 0 permission"
+                            default = net.minecrell.pluginyml.nukkit.NukkitPluginDescription.Permission.Default.FALSE
+                        }
+                    }
+                }
+                "stackstorage.admin.*" {
+                    description = "StackStorage admin permission"
+                    default = net.minecrell.pluginyml.nukkit.NukkitPluginDescription.Permission.Default.OP
+                }
+            }
+        }
+    }
 }
