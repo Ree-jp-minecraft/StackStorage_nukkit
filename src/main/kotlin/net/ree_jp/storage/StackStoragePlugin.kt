@@ -13,15 +13,17 @@ package net.ree_jp.storage
 
 import cn.nukkit.plugin.PluginBase
 import net.ree_jp.storage.api.StackStorageAPI
+import net.ree_jp.storage.command.StackStorageCommand
+import net.ree_jp.storage.event.StorageListener
 import net.ree_jp.storage.sqlite.SqliteHelper
 
-class StackStoragePlugin: PluginBase() {
+class StackStoragePlugin : PluginBase() {
 
-    companion object{
+    companion object {
 
         private lateinit var instance: StackStoragePlugin
 
-        fun getInstance(): StackStoragePlugin{
+        fun getInstance(): StackStoragePlugin {
             return instance
         }
     }
@@ -37,21 +39,20 @@ class StackStoragePlugin: PluginBase() {
     }
 
     override fun onEnable() {
+        server.commandMap.register("stackstorage", StackStorageCommand("stackstorage", "StackStorage open command"))
+        server.pluginManager.registerEvents(StorageListener(), this)
+        server.commandAliases["stackstorage"] = listOf("st")
         super.onEnable()
     }
 
-    override fun onDisable() {
-        super.onDisable()
-    }
-
-    fun getHelper(): SqliteHelper{
+    fun getHelper(): SqliteHelper {
         if (!::helper.isInitialized) {
             helper = SqliteHelper(getInstance().dataFolder.path)
         }
         return helper
     }
 
-    fun getApi(): StackStorageAPI{
+    fun getApi(): StackStorageAPI {
         if (!::api.isInitialized) {
             api = StackStorageAPI()
         }

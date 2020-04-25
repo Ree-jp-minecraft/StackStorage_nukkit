@@ -11,6 +11,7 @@
 
 package net.ree_jp.storage.inventory
 
+import cn.nukkit.Server
 import cn.nukkit.blockentity.BlockEntityChest
 import cn.nukkit.item.Item
 import net.ree_jp.storage.StackStoragePlugin
@@ -31,16 +32,26 @@ class StackStorage(left: BlockEntityChest, right: BlockEntityChest) : VirtualDou
     }
 
     fun refresh(xuid: String) {
-        val items = helper().getStorage(xuid).withIndex().groupBy{ it.index / 3 }.map{ entry -> entry.value.map{ it.value } }
-        val pageItem = items[page - 1]
-        for ((index, item) in pageItem.withIndex()) {
-            val count = item.count
-            val max = item.maxStackSize
-            if (count > max) {
-                item.setLore("count: $count")
-                item.setCount(max)
+        Server.getInstance().scheduler.scheduleDelayedTask(
+            { callRefresh(xuid) },
+            1
+        )
+    }
+
+    private fun callRefresh(xuid: String) {
+        val items = helper().getStorage(xuid).withIndex().groupBy{ it.index / 45 }.map{ entry -> entry.value.map{ it.value } }
+        clearAll()
+        if (items.isNotEmpty()) {
+            val pageItem = items[page - 1]
+            for ((index, item) in pageItem.withIndex()) {
+                val count = item.count
+                val max = item.maxStackSize
+                if (count > max) {
+                    item.setLore("count: $count")
+                    item.setCount(max)
+                }
+                setItem(index, item)
             }
-            setItem(index, item)
         }
         setItem(49, Item.get(Item.BOOK).setCustomName("Close"))
         if (page > 1) {

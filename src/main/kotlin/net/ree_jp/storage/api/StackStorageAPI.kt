@@ -15,11 +15,14 @@ import cn.nukkit.Player
 import cn.nukkit.Server
 import cn.nukkit.blockentity.BlockEntity
 import cn.nukkit.blockentity.BlockEntityChest
+import cn.nukkit.inventory.Inventory
 import cn.nukkit.item.Item
 import cn.nukkit.level.Position
+import cn.nukkit.math.BlockVector3
 import net.ree_jp.storage.StackStoragePlugin
 import net.ree_jp.storage.inventory.StackStorage
 import net.ree_jp.storage.sqlite.SqliteHelper
+
 
 class StackStorageAPI {
 
@@ -33,35 +36,24 @@ class StackStorageAPI {
         }
     }
 
-    private val storage = mutableMapOf<String, StackStorage>()
-
-    fun isOpen(p: Player): Boolean {
-        val xuid = p.loginChainData.xuid
-        return storage[xuid] != null
-    }
+    private val fakeAPI = FakeAPI()
 
     fun sendGui(p: Player) {
         if (!check(p,"stackstorage.action.open")) return
         val xuid = p.loginChainData.xuid
-        val level = p.level
-        if (storage[xuid] != null) return
+        val fakeAPI = FakeAPI.getInstance()
         val window = createGui(p.position.add(0.0, 2.0, 0.0))
-        storage[xuid] = window
-        level.sendBlocks(arrayOf(p), arrayOf(window.rightSide.holder.levelBlock, window.leftSide.holder.levelBlock))
+        fakeAPI.placeChest(p, BlockVector3(p.floorX, p.floorY + 2, p.floorZ))
         Server.getInstance().scheduler.scheduleDelayedTask(
             { p.addWindow(window) },
             3
         )
+        window.refresh(xuid)
     }
 
-    fun closeGui(p: Player) {
-        val xuid = p.loginChainData.xuid
-        val window = storage.remove(xuid) ?: return
-        val level = p.level
-        window.holder.inventory.clearAll()
-        window.close(p)
-        level.getBlock(window.rightSide.holder.levelBlock)
-        level.getBlock(window.leftSide.holder.levelBlock)
+    fun closeGui(p: Player, window: Inventory) {
+        p.removeWindow(window)
+        FakeAPI.getInstance().removeChest(p)
     }
 
     fun addItem(p: Player, item: Item) {

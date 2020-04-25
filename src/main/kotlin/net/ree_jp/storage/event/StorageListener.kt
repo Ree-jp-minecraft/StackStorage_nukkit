@@ -21,7 +21,7 @@ import cn.nukkit.item.Item
 import net.ree_jp.storage.StackStoragePlugin
 import net.ree_jp.storage.inventory.StackStorage
 
-class StorageListener: Listener {
+class StorageListener : Listener {
 
     @EventHandler
     fun transferForStorageInOut(ev: InventoryTransactionEvent) {
@@ -41,7 +41,7 @@ class StorageListener: Listener {
                         when(action.slot) {
                             49 -> {
                                 ev.setCancelled()
-                                api.closeGui(p)
+                                api.closeGui(p, inventory)
                             }
                             45 -> {
                                 ev.setCancelled()
@@ -71,7 +71,7 @@ class StorageListener: Listener {
         val p = ev.player
         val inventory = ev.inventory
         if (inventory is StackStorage) {
-            StackStoragePlugin.getInstance().getApi().closeGui(p)
+            StackStoragePlugin.getInstance().getApi().closeGui(p, inventory)
             removeLore(inventory)
         }
     }

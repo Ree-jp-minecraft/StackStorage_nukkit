@@ -33,31 +33,32 @@ class SqliteHelper(path: String) : ISqliteHelper {
     }
 
     override fun isExists(xuid: String): Boolean {
-        val stmt = connection.prepareStatement("SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND xuid = ?")
+        val stmt = connection.prepareStatement("SELECT COUNT(*) FROM sqlite_master WHERE type = 'table' AND name = ?")
         stmt.setString(1, xuid)
-        return stmt.executeQuery().next()
+        return stmt.executeQuery().getInt(1) > 0
     }
 
     override fun getItem(xuid: String, item: Item): Item {
         if (!isExists(xuid)) throw Exception("storage not found")
 
-        val stmt = connection.prepareStatement("SELECT count FROM '$xuid' WHERE id = ?, meta =?, enchant = ?")
+        val stmt = connection.prepareStatement("SELECT count FROM '$xuid' WHERE id = ? AND meta =? AND enchant = ?")
         stmt.setInt(1, item.id)
         stmt.setInt(2, item.damage)
         stmt.setString(3, decodeEnchant(item))
         val result = stmt.executeQuery()
+        val resultItem = item.clone()
         if (result.next()) {
-            item.setCount(result.getInt("count"))
+            resultItem.setCount(result.getInt("count"))
         }else{
-            item.setCount(0)
+            resultItem.setCount(0)
         }
-        return item
+        return resultItem
     }
 
     override fun setItem(xuid: String, item: Item) {
         if (!isExists(xuid)) setTable(xuid)
 
-        val id = item.count
+        val id = item.id
         val meta = item.damage
         val enchant = decodeEnchant(item)
         val count = item.count
@@ -67,7 +68,7 @@ class SqliteHelper(path: String) : ISqliteHelper {
             stmt = connection.prepareStatement("REPLACE INTO '$xuid' VALUES (?, ?, ?, ?)")
             stmt.setInt(4, count)
         }else{
-            stmt = connection.prepareStatement("DELETE FROM '$xuid' WHERE id = ?, meta = ?, enchant = ?")
+            stmt = connection.prepareStatement("DELETE FROM '$xuid' WHERE id = ? AND meta = ? AND enchant = ?")
         }
         stmt.setInt(1, id)
         stmt.setInt(2, meta)
@@ -76,7 +77,7 @@ class SqliteHelper(path: String) : ISqliteHelper {
     }
 
     override fun getStorage(xuid: String): List<Item> {
-        if (!isExists(xuid)) throw Exception("storage not found")
+        if (!isExists(xuid)) setTable(xuid)
 
         val result = connection.createStatement().executeQuery("SELECT * FROM '$xuid'")
         val list = mutableListOf<Item>()
