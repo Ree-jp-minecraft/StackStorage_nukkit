@@ -20,6 +20,7 @@ class StackStorageCommand(name: String, description: String): Command(name, desc
 
     init {
         permission = "stackstorage.command.$name"
+        aliases = arrayOf("st")
     }
 
     override fun execute(sender: CommandSender?, commandLabel: String?, args: Array<out String>?): Boolean {
