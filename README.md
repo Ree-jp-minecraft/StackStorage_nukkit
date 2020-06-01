@@ -1,5 +1,5 @@
 # StackStorage_nukkit
-[![pipeline status](https://gitlab.com/Ree-jp/StackStorage_nukkit/badges/dev/pipeline.svg)](https://gitlab.com/Ree-jp/StackStorage_nukkit/-/commits/dev)  
+[![CI](https://github.com/Ree-jp-minecraft/StackStoragte_nukkit/workflows/CI/badge.svg)](https://github.com/Ree-jp-minecraft/StackStorage_nukkit/actions?query=workflow%3ACI)
 
 Add simple virtual storage
 

@@ -18,6 +18,7 @@ import cn.nukkit.event.inventory.InventoryTransactionEvent
 import cn.nukkit.inventory.Inventory
 import cn.nukkit.inventory.transaction.action.SlotChangeAction
 import cn.nukkit.item.Item
+import cn.nukkit.utils.TextFormat
 import net.ree_jp.storage.StackStoragePlugin
 import net.ree_jp.storage.inventory.StackStorage
 
@@ -54,6 +55,12 @@ class StorageListener : Listener {
                         }
                     }
                     if (target.id != Item.AIR) {
+                        if (!api.isCanStorage(target)) {
+                            p.sendMessage("${TextFormat.GREEN}>> ${TextFormat.RESET}このアイテムはストレージに入れることができません")
+                            api.closeGui(p, inventory)
+                            ev.setCancelled()
+                            return
+                        }
                         api.addItem(p, target)
                         inventory.refresh(xuid)
                     }
