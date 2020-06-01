@@ -26,20 +26,22 @@ import net.ree_jp.storage.sqlite.SqliteHelper
 
 class StackStorageAPI {
 
-    companion object{
+    companion object {
+
+        const val CAN_STORAGE = "StackStorage_can_storage"
 
         fun check(p: Player, permission: String): Boolean {
             return if (!p.hasPermission(permission)) {
                 p.sendMessage("request permission: $permission")
                 false
-            }else true
+            } else true
         }
     }
 
     private val fakeAPI = FakeAPI()
 
     fun sendGui(p: Player) {
-        if (!check(p,"stackstorage.action.open")) return
+        if (!check(p, "stackstorage.action.open")) return
         val xuid = p.loginChainData.xuid
         val fakeAPI = FakeAPI.getInstance()
         val window = createGui(p.position.add(0.0, 2.0, 0.0))
@@ -69,6 +71,17 @@ class StackStorageAPI {
             storageItem.setCount(storageItem.count - item.count)
             getHelper().setItem(xuid, storageItem)
         }
+    }
+
+    fun isCanStorage(item: Item): Boolean {
+        val nbt = item.namedTag
+        return nbt.exist(CAN_STORAGE) && nbt.getBoolean(CAN_STORAGE)
+    }
+
+    fun setCanStorage(item: Item, bool: Boolean): Item {
+        val nbt = item.namedTag
+        item.namedTag = nbt.putBoolean(CAN_STORAGE,bool)
+        return item
     }
 
     private fun createGui(pos: Position): StackStorage {
