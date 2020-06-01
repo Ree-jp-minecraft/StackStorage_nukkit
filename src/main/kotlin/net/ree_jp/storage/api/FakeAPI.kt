@@ -58,7 +58,6 @@ class FakeAPI {
         blockEntityData.z = pos.z
         blockEntityData.namedTag = getDoubleNbt(pos, pair)
         who.dataPacket(blockEntityData)
-
     }
 
     private fun update(who: Player, pos: BlockVector3) {
@@ -73,7 +72,7 @@ class FakeAPI {
         who.dataPacket(updateBlock)
     }
 
-    private fun getDoubleNbt(pos: BlockVector3, pos2: BlockVector3): ByteArray? {
+    private fun getDoubleNbt(pos: BlockVector3, pos2: BlockVector3): ByteArray {
         val tag = CompoundTag()
             .putString("id", BlockEntity.CHEST)
             .putInt("x", pos.x)

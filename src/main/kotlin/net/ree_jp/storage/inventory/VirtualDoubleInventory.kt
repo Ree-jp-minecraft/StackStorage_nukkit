@@ -14,5 +14,4 @@ package net.ree_jp.storage.inventory
 import cn.nukkit.blockentity.BlockEntityChest
 import cn.nukkit.inventory.DoubleChestInventory
 
-open class VirtualDoubleInventory(left: BlockEntityChest, right: BlockEntityChest) : DoubleChestInventory(left, right) {
-}
+open class VirtualDoubleInventory(left: BlockEntityChest, right: BlockEntityChest) : DoubleChestInventory(left, right)
