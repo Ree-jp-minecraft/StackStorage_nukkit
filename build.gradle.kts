@@ -45,36 +45,34 @@ nukkit {
     website = "https://github.com/Ree-jp-minecraft/StackStorage_nukkit"
     version = "1.0.0"
 
-    permissions.register("stackstorage.*")
-
     permissions {
-        "stackstorage.*" {
+        create("stackstorage.*") {
             description = "StackStorage permission"
             default = net.minecrell.pluginyml.nukkit.NukkitPluginDescription.Permission.Default.FALSE
             children {
-                "stackstorage.command.*" {
+                create("stackstorage.command.*") {
                     description = "StackStorage command permission"
                     default = net.minecrell.pluginyml.nukkit.NukkitPluginDescription.Permission.Default.TRUE
                 }
-                "stackstorage.action.*" {
+                create("stackstorage.action.*") {
                     description = "StackStorage action permission"
                     default = net.minecrell.pluginyml.nukkit.NukkitPluginDescription.Permission.Default.TRUE
                     children {
-                        "stackstorage.action.open" {
+                        create("stackstorage.action.open") {
                             description = "StackStorage action open permission"
                             default = net.minecrell.pluginyml.nukkit.NukkitPluginDescription.Permission.Default.TRUE
                         }
-                        "stackstorage.action.in" {
+                        create("stackstorage.action.in") {
                             description = "StackStorage action in permission"
                             default = net.minecrell.pluginyml.nukkit.NukkitPluginDescription.Permission.Default.TRUE
                         }
-                        "stackstorage.action.out" {
+                        create("stackstorage.action.out") {
                             description = "StackStorage action out permission"
                             default = net.minecrell.pluginyml.nukkit.NukkitPluginDescription.Permission.Default.TRUE
                         }
                     }
                 }
-                "stackstorage.admin.*" {
+                create("stackstorage.admin.*") {
                     description = "StackStorage admin permission"
                     default = net.minecrell.pluginyml.nukkit.NukkitPluginDescription.Permission.Default.OP
                 }
