@@ -75,7 +75,7 @@ class StackStorageAPI {
 
     fun isCanStorage(item: Item): Boolean {
         val nbt = item.namedTag
-        return nbt.exist(CAN_STORAGE) && nbt.getBoolean(CAN_STORAGE)
+        return nbt.getBoolean(CAN_STORAGE)
     }
 
     fun setCanStorage(item: Item, bool: Boolean): Item {
