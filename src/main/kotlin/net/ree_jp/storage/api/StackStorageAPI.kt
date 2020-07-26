@@ -55,7 +55,7 @@ class StackStorageAPI {
     }
 
     fun closeGui(p: Player, window: Inventory) {
-        p.removeWindow(window)
+        window.close(p)
         FakeAPI.getInstance().removeChest(p)
     }
 
