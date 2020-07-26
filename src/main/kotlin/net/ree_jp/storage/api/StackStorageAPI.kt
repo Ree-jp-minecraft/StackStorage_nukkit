@@ -19,6 +19,7 @@ import cn.nukkit.inventory.Inventory
 import cn.nukkit.item.Item
 import cn.nukkit.level.Position
 import cn.nukkit.math.BlockVector3
+import cn.nukkit.nbt.tag.CompoundTag
 import net.ree_jp.storage.StackStoragePlugin
 import net.ree_jp.storage.inventory.StackStorage
 import net.ree_jp.storage.sqlite.SqliteHelper
@@ -74,13 +75,13 @@ class StackStorageAPI {
     }
 
     fun isCanStorage(item: Item): Boolean {
-        val nbt = item.namedTag
+        val nbt = getNamedTag(item)
         return nbt.getBoolean(CAN_STORAGE)
     }
 
     fun setCanStorage(item: Item, bool: Boolean): Item {
-        val nbt = item.namedTag
-        item.namedTag = nbt.putBoolean(CAN_STORAGE,bool)
+        val nbt = getNamedTag(item)
+        item.namedTag = nbt.putBoolean(CAN_STORAGE, bool)
         return item
     }
 
@@ -107,5 +108,13 @@ class StackStorageAPI {
 
     private fun getHelper(): SqliteHelper {
         return StackStoragePlugin.getInstance().getHelper()
+    }
+
+    private fun getNamedTag(item: Item): CompoundTag {
+        return if (item.hasCompoundTag()) {
+            item.namedTag
+        } else {
+            CompoundTag()
+        }
     }
 }
