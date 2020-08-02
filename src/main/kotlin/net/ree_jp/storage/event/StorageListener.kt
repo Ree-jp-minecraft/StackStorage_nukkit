@@ -39,7 +39,7 @@ class StorageListener : Listener {
                     val target = action.targetItem
                     val source = action.sourceItem
                     if (source.id != Item.AIR) {
-                        when(action.slot) {
+                        when (action.slot) {
                             49 -> {
                                 ev.setCancelled()
                                 api.closeGui(p, inventory)
@@ -84,7 +84,8 @@ class StorageListener : Listener {
     }
 
     private fun removeLore(inventory: Inventory) {
-        val size = inventory.size - 1
-        for (index in 0..size) inventory.setItem(index, inventory.getItem(index).setLore())
+        inventory.contents.forEach { (index, item) ->
+            if ((item.lore !== arrayOf<String>())) inventory.setItem(index, item.setLore(String()))
+        }
     }
 }
